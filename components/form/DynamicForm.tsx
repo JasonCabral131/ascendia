@@ -13,7 +13,9 @@ interface DynamicFormProps {
 
 const DynamicForm = memo<DynamicFormProps>(({ config }) => {
   const [fieldValues, setFieldValues] = useState<FieldValues>({});
-  const { errors, validateSingleField } = useFormValidation(config.Fields);
+  const { errors, validateSingleField, validateForm } = useFormValidation(
+    config.Fields
+  );
 
   const handleFieldChange = useCallback(
     (id: string, value: string | string[]) => {
@@ -39,9 +41,11 @@ const DynamicForm = memo<DynamicFormProps>(({ config }) => {
         fieldValues={fieldValues}
         onFieldChange={handleFieldChange}
         error={field.ID ? errors[field.ID] : undefined}
+        formFields={config.Fields}
+        validateForm={validateForm}
       />
     ));
-  }, [config.Fields, fieldValues, handleFieldChange, errors]);
+  }, [config.Fields, fieldValues, handleFieldChange, errors, validateForm]);
 
   return (
     <ScrollView

@@ -5,16 +5,21 @@ import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Text } from '@/components/Themed';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
-import { FieldValues } from '@/types/FormTypes';
+import { FieldValues, FormField } from '@/types/FormTypes';
 
 interface ButtonFieldProps {
   title: string;
   alertMessage: string;
   fieldValues: FieldValues;
+  formFields: FormField[];
+  validateForm: (values: FieldValues) => {
+    isValid: boolean;
+    errors: { [key: string]: string };
+  };
 }
 
 const ButtonField = memo<ButtonFieldProps>(
-  ({ title, alertMessage, fieldValues }) => {
+  ({ title, alertMessage, fieldValues, formFields, validateForm }) => {
     const colorScheme = useColorScheme();
 
     const parseAlertMessage = useCallback(
@@ -30,10 +35,57 @@ const ButtonField = memo<ButtonFieldProps>(
       []
     );
 
+    const extractFieldIdsFromMessage = useCallback(
+      (message: string): string[] => {
+        const matches = message.match(/\$\{([^}]+)\}/g);
+        if (!matches) return [];
+        return matches.map((match) => match.slice(2, -1)); // Remove ${ and }
+      },
+      []
+    );
+
+    const checkFieldsValidation = useCallback(() => {
+      const referencedFieldIds = extractFieldIdsFromMessage(alertMessage);
+      const validationResult = validateForm(fieldValues);
+
+      if (!validationResult.isValid) {
+        // Check if any referenced fields have errors
+        const referencedFieldErrors = referencedFieldIds
+          .filter((fieldId) => validationResult.errors[fieldId])
+          .map((fieldId) => {
+            const field = formFields.find((f) => f.ID === fieldId);
+            const fieldName = field?.Text || field?.Placeholder || fieldId;
+            return `• ${fieldName}: ${validationResult.errors[fieldId]}`;
+          });
+
+        if (referencedFieldErrors.length > 0) {
+          Alert.alert(
+            'Validation Error',
+            `Please fix the following errors before proceeding:\n\n${referencedFieldErrors.join(
+              '\n'
+            )}`,
+            [{ text: 'OK' }]
+          );
+          return false;
+        }
+      }
+      return true;
+    }, [
+      alertMessage,
+      fieldValues,
+      validateForm,
+      formFields,
+      extractFieldIdsFromMessage,
+    ]);
+
     const handlePress = useCallback(() => {
+      if (!checkFieldsValidation()) {
+        return;
+      }
+
       const parsedMessage = parseAlertMessage(alertMessage, fieldValues);
       Alert.alert('Message', parsedMessage);
-    }, [alertMessage, fieldValues, parseAlertMessage]);
+    }, [alertMessage, fieldValues, parseAlertMessage, checkFieldsValidation]);
 
     return (
       <TouchableOpacity

@@ -162,12 +162,6 @@
       "Type": "Button",
       "Title": "Complete Summary",
       "AlertMessage": "Profile Summary:\n\nName: ${first-name} ${last-name}\nEmail: ${email}\nPhone: ${phone}\nAge: ${age}\nFavorite Color: ${favorite-color}\nProgramming Languages: ${programming-languages}\nExperience Level: ${experience-level}"
-    },
-    {
-      "ID": "validate-button",
-      "Type": "Button",
-      "Title": "Validate Form",
-      "AlertMessage": "Form validation will run automatically when you change field values!"
     }
   ]
 }

@@ -13,10 +13,15 @@ interface FormFieldRendererProps {
   fieldValues: FieldValues;
   onFieldChange: (id: string, value: string | string[]) => void;
   error?: string;
+  formFields: FormField[];
+  validateForm: (values: FieldValues) => {
+    isValid: boolean;
+    errors: { [key: string]: string };
+  };
 }
 
 const FormFieldRenderer = memo<FormFieldRendererProps>(
-  ({ field, fieldValues, onFieldChange, error }) => {
+  ({ field, fieldValues, onFieldChange, error, formFields, validateForm }) => {
     const fieldValueRef = useRef<string | string[]>(
       field.ID ? fieldValues[field.ID] || (field.Multiple ? [] : '') : ''
     );
@@ -95,6 +100,8 @@ const FormFieldRenderer = memo<FormFieldRendererProps>(
               title={field.Title || ''}
               alertMessage={field.AlertMessage || ''}
               fieldValues={fieldValues}
+              formFields={formFields}
+              validateForm={validateForm}
             />
           );
 
