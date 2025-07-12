@@ -1,0 +1,173 @@
+{
+  "Title": "Tech Assessment - Complete Demo",
+  "Subtitle": "Jason Cabral",
+  "Fields": [
+    {
+      "Type": "H1",
+      "Text": "Personal Information"
+    },
+    {
+      "ID": "first-name",
+      "Type": "Text",
+      "Placeholder": "Enter your first name",
+      "Required": true,
+      "ValidationFunction": "isAlphabetic",
+      "ValidationMessage": "First name must contain only letters"
+    },
+    {
+      "ID": "last-name",
+      "Type": "Text",
+      "Placeholder": "Enter your last name",
+      "Required": true,
+      "ValidationFunction": "isAlphabetic",
+      "ValidationMessage": "Last name must contain only letters"
+    },
+    {
+      "ID": "email",
+      "Type": "Text",
+      "Placeholder": "Enter your email address",
+      "Required": true,
+      "ValidationFunction": "isEmail",
+      "ValidationMessage": "Please enter a valid email address"
+    },
+    {
+      "ID": "phone",
+      "Type": "Text",
+      "Placeholder": "Enter your phone number",
+      "Required": false,
+      "ValidationFunction": "isPhone",
+      "ValidationMessage": "Please enter a valid phone number"
+    },
+    {
+      "ID": "age",
+      "Type": "Text",
+      "Placeholder": "Enter your age",
+      "Required": false,
+      "ValidationRegex": "^[1-9][0-9]?$|^100$",
+      "ValidationMessage": "Age must be between 1 and 100"
+    },
+    {
+      "Type": "H1",
+      "Text": "Preferences"
+    },
+    {
+      "ID": "favorite-color",
+      "Type": "Radio",
+      "Options": [
+        {
+          "label": "Red",
+          "value": "red",
+          "id": "color-red"
+        },
+        {
+          "label": "Blue",
+          "value": "blue",
+          "id": "color-blue"
+        },
+        {
+          "label": "Green",
+          "value": "green",
+          "id": "color-green"
+        },
+        {
+          "label": "Yellow",
+          "value": "yellow",
+          "id": "color-yellow"
+        }
+      ]
+    },
+    {
+      "ID": "programming-languages",
+      "Type": "Select",
+      "Multiple": true,
+      "Placeholder": "Select programming languages",
+      "ModalTitleMultiple": "Choose Programming Languages",
+      "Required": true,
+      "ValidationMessage": "Please select at least one programming language",
+      "Options": [
+        {
+          "label": "JavaScript",
+          "value": "javascript",
+          "id": "lang-js"
+        },
+        {
+          "label": "TypeScript",
+          "value": "typescript",
+          "id": "lang-ts"
+        },
+        {
+          "label": "Python",
+          "value": "python",
+          "id": "lang-python"
+        },
+        {
+          "label": "Java",
+          "value": "java",
+          "id": "lang-java"
+        },
+        {
+          "label": "C++",
+          "value": "cpp",
+          "id": "lang-cpp"
+        }
+      ]
+    },
+    {
+      "ID": "experience-level",
+      "Type": "Select",
+      "Multiple": false,
+      "Placeholder": "Select your experience level",
+      "ModalTitleSingle": "Choose Experience Level",
+      "Options": [
+        {
+          "label": "Beginner (0-1 years)",
+          "value": "beginner",
+          "id": "exp-beginner"
+        },
+        {
+          "label": "Intermediate (2-5 years)",
+          "value": "intermediate",
+          "id": "exp-intermediate"
+        },
+        {
+          "label": "Senior (5-10 years)",
+          "value": "senior",
+          "id": "exp-senior"
+        },
+        {
+          "label": "Expert (10+ years)",
+          "value": "expert",
+          "id": "exp-expert"
+        }
+      ]
+    },
+    {
+      "Type": "H1",
+      "Text": "Actions"
+    },
+    {
+      "ID": "greeting-button",
+      "Type": "Button",
+      "Title": "Personal Greeting",
+      "AlertMessage": "Hello ${first-name} ${last-name}!"
+    },
+    {
+      "ID": "preferences-button",
+      "Type": "Button",
+      "Title": "Show Preferences",
+      "AlertMessage": "Your favorite color is ${favorite-color} and you know ${programming-languages} at a ${experience-level} level."
+    },
+    {
+      "ID": "summary-button",
+      "Type": "Button",
+      "Title": "Complete Summary",
+      "AlertMessage": "Profile Summary:\n\nName: ${first-name} ${last-name}\nEmail: ${email}\nPhone: ${phone}\nAge: ${age}\nFavorite Color: ${favorite-color}\nProgramming Languages: ${programming-languages}\nExperience Level: ${experience-level}"
+    },
+    {
+      "ID": "validate-button",
+      "Type": "Button",
+      "Title": "Validate Form",
+      "AlertMessage": "Form validation will run automatically when you change field values!"
+    }
+  ]
+}
