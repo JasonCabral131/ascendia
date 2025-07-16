@@ -96,15 +96,15 @@ const ButtonField = memo<ButtonFieldProps>(
             fieldValues[field?.VisibleCondition?.ID] ===
             field?.VisibleCondition?.Value
           );
+        case 'NotEquals':
+          return (
+            fieldValues[field?.VisibleCondition?.ID] !==
+            field?.VisibleCondition?.Value
+          );
         default:
           false;
       }
     }, [fieldValues]);
-    console.log(
-      'isShowButton',
-      isShowButton,
-      fieldValues[field?.VisibleCondition?.ID]
-    );
     return (
       <TouchableOpacity
         style={[

@@ -6,22 +6,15 @@
       "Type": "H1",
       "Text": "Personal Information"
     },
-    {
-      "ID": "first-name",
+     {
+      "ID": "person-name",
       "Type": "Text",
-      "Placeholder": "Enter your first name",
+      "Placeholder": "Enter your person name",
       "Required": true,
-      "ValidationFunction": "isAlphabetic",
-      "ValidationMessage": "First name must contain only letters"
+      "autoCapitalize": "none",
+      "Text": "Person Name"
     },
-    {
-      "ID": "last-name",
-      "Type": "Text",
-      "Placeholder": "Enter your last name",
-      "Required": true,
-      "ValidationFunction": "isAlphabetic",
-      "ValidationMessage": "Last name must contain only letters"
-    },
+ 
     {
       "ID": "email",
       "Type": "Text",
@@ -149,7 +142,13 @@
       "ID": "greeting-button",
       "Type": "Button",
       "Title": "Personal Greeting",
-      "AlertMessage": "Hello ${first-name} ${last-name}!"
+      "AlertMessage": "Hello ${first-name} ${last-name}!", 
+      "VisibleCondition": {
+        "ID": "person-name",
+        "Operator": "Equals",
+        "Value": "peter"
+      }
+    
     },
     {
       "ID": "preferences-button",
