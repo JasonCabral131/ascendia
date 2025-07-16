@@ -102,6 +102,8 @@ const FormFieldRenderer = memo<FormFieldRendererProps>(
               fieldValues={fieldValues}
               formFields={formFields}
               validateForm={validateForm}
+              id={field.ID}
+              field={field}
             />
           );
 

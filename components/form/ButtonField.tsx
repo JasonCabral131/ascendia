@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Text } from '@/components/Themed';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -16,10 +16,12 @@ interface ButtonFieldProps {
     isValid: boolean;
     errors: { [key: string]: string };
   };
+  id: string;
+  field: any;
 }
 
 const ButtonField = memo<ButtonFieldProps>(
-  ({ title, alertMessage, fieldValues, formFields, validateForm }) => {
+  ({ title, alertMessage, fieldValues, formFields, validateForm, field }) => {
     const colorScheme = useColorScheme();
 
     const parseAlertMessage = useCallback(
@@ -86,12 +88,31 @@ const ButtonField = memo<ButtonFieldProps>(
       const parsedMessage = parseAlertMessage(alertMessage, fieldValues);
       Alert.alert('Message', parsedMessage);
     }, [alertMessage, fieldValues, parseAlertMessage, checkFieldsValidation]);
-
+    const isShowButton = useMemo(() => {
+      if (!field?.VisibleCondition) return true;
+      switch (field?.VisibleCondition?.Operator) {
+        case 'Equals':
+          return (
+            fieldValues[field?.VisibleCondition?.ID] ===
+            field?.VisibleCondition?.Value
+          );
+        default:
+          false;
+      }
+    }, [fieldValues]);
+    console.log(
+      'isShowButton',
+      isShowButton,
+      fieldValues[field?.VisibleCondition?.ID]
+    );
     return (
       <TouchableOpacity
         style={[
           styles.button,
-          { backgroundColor: Colors[colorScheme ?? 'light'].tint },
+          {
+            backgroundColor: Colors[colorScheme ?? 'light'].tint,
+            display: isShowButton ? undefined : 'none',
+          },
         ]}
         onPress={handlePress}
         activeOpacity={0.7}>
